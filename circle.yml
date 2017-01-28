@@ -1,0 +1,9 @@
+machine:
+    timezone: America/Chicago
+    environment:
+        APP_ENV: test
+    php:
+        version: 5.4.37
+test:
+    override:
+        - phpunit

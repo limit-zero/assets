@@ -1,0 +1,27 @@
+{
+    "name": "limit0/assets",
+    "license": "MIT",
+    "type": "library",
+    "description": "A PHP library for handling file assets.",
+    "authors": [
+        {
+            "name": "Josh Worden",
+            "email": "josh@limit0.io"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Limit0\\Assets\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=5.4",
+        "symfony/http-foundation": "~2.8|~3.0"
+    },
+    "suggest": {
+        "aws/aws-sdk-php": "Provides support for storing assets to S3 in Amazon Web Services"
+    },
+    "require-dev": {
+        "aws/aws-sdk-php": "~3.0"
+    }
+}
