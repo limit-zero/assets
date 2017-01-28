@@ -28,7 +28,8 @@ use Limit0\Assets\StorageEngineInterface;
  * the AWS SDK itself, for more info:
  * @see http://docs.aws.amazon.com/aws-sdk-php/v3/guide/guide/credentials.html#environment-credentials
  *
- * @see setBucket -- bucket must be set when configuring this storage engine.
+ * @see setBucket   The bucket must be set when configuring this storage engine.
+ * @see setAcl      The default ACL is `private`.
  *
  * @author  Josh Worden <josh@limit0.io>
  */
@@ -40,6 +41,11 @@ class AmazonS3StorageEngine implements StorageEngineInterface
     private $bucket;
 
     /**
+     * @var     string
+     */
+    private $acl = 'private';
+
+    /**
      * @var     S3Client
      */
     private $client;
@@ -48,6 +54,14 @@ class AmazonS3StorageEngine implements StorageEngineInterface
      * @var     string
      */
     private $region = 'us-east-1';
+
+    /**
+     * @return  string
+     */
+    public function getAcl()
+    {
+        return $this->acl;
+    }
 
     /**
      * @return  string
@@ -126,6 +140,17 @@ class AmazonS3StorageEngine implements StorageEngineInterface
     }
 
     /**
+     * Sets the ACL the asset should be stored with.
+     *
+     * @param   string
+     */
+    public function setAcl($acl)
+    {
+        $this->acl = $acl;
+        return $this;
+    }
+
+    /**
      * Sets the bucket the assets should be stored to.
      *
      * @param   string
@@ -156,9 +181,11 @@ class AmazonS3StorageEngine implements StorageEngineInterface
 
         try {
             $this->getClient()->putObject([
-                'Bucket'    => $this->getBucket(),
-                'Key'       => $key,
-                'Body'      => fopen($asset->getPathname(), 'r')
+                'ACL'           => $this->getAcl(),
+                'Bucket'        => $this->getBucket(),
+                'Key'           => $key,
+                'ContentType'   => $asset->getMimeType(),
+                'Body'          => fopen($asset->getPathname(), 'r')
             ]);
 
         } catch (S3Exception $e) {

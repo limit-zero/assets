@@ -36,6 +36,6 @@ class AmazonS3Test extends AbstractStorageEngineTest
         }
 
         self::$engine = new AmazonS3StorageEngine();
-        self::$engine->setBucket($bucket);
+        self::$engine->setBucket($bucket)->setAcl('public-read');
     }
 }
