@@ -33,7 +33,7 @@ class AssetManagerTest extends \PHPUnit_Framework_TestCase
         file_put_contents($this->getTestFilePath(), 'Lorem ipsum dolor sit amet.');
 
         $engineMock = $this
-            ->getMockBuilder('Limit0\Assets\StorageEngine\LocalFileStorageEngine')
+            ->getMockBuilder('Limit0\Assets\StorageEngine\AmazonS3StorageEngine')
             ->setMethods(['store', 'retrieve', 'remove'])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
