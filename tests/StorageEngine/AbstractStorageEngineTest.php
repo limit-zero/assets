@@ -47,6 +47,12 @@ abstract class AbstractStorageEngineTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Limit0\Assets\Asset', $asset);
     }
 
+    public function testFileContents()
+    {
+        $asset = self::$engine->retrieve($this->getTestIdentifier());
+        $this->assertSame(file_get_contents($this->getTestAsset()), file_get_contents($asset), 'StorageEngine did not store file contents properly.');
+    }
+
     public function testEngineRemoval()
     {
         $result = self::$engine->remove($this->getTestIdentifier());
