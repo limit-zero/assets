@@ -95,8 +95,6 @@ class LocalStorageEngine implements StorageEngineInterface
             throw new StorageException($error['message']);
         }
 
-        file_put_contents($key, $asset);
-
-        return true;
+        return file_put_contents($key, file_get_contents($asset));
     }
 }
